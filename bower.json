@@ -1,0 +1,17 @@
+{
+  "name": "sass-utils",
+  "version": "0.0.0",
+  "authors": [
+    "Michal <kontakt@michal-pawelczyk.com>"
+  ],
+  "description": "Sass utils (for RWD, fonts, colors etc.)",
+  "main": "sass/_utils.scss",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

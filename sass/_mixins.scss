@@ -1,0 +1,196 @@
+/* ==========================================================================
+   MIXINS
+   ========================================================================== */
+
+@mixin main ($width: 980px) {
+	width: 100%;
+	max-width: $width;
+	margin: 0 auto;
+	position: relative;
+	height: 100%;
+}
+
+@mixin before {
+	display: block;
+	content: '';
+	position: absolute;
+}
+
+@mixin clear-fix() {
+  
+  &:before,
+  &:after {
+    content: ' ';
+    display: table;
+  }
+
+  &:after {
+    clear: both;
+  }
+  // For IE 6/7 (trigger hasLayout)
+  zoom: 1;
+}
+
+/* SELECTIONS
+   ========================================================================== */
+
+@mixin selection($color, $bg-color) { 
+
+	@include user-select(text);
+
+	&::-moz-selection {
+    background: $bg-color;
+    color: $color;
+	}	
+
+	&::selection {
+      background: $bg-color;
+      color: $color; 
+	}
+
+}
+
+@mixin disable-selection() {
+  
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+}
+
+/* RETINA
+   ========================================================================== */
+
+@mixin rwd($type: "screen", $min: 200, $max: 800) {
+
+    @if (variable-exists(map-get($mobileWidth, max))) {
+        $mobile-max : map-get($mobileWidth, max);
+    } @else {
+        $mobile-max : 499;
+    }
+
+    @if (variable-exists(map-get($tabletMax, min))) {
+        $tablet-min : map-get($tabletMax, min);
+    } @else {
+        $tablet-min : 500;
+    }
+
+    @if (variable-exists(map-get($tabletMax, max))) {
+        $tablet-max : map-get($tabletMax, max);
+    } @else {
+        $tablet-max : 979;
+    }
+
+    @if (variable-exists(map-get($screenWidth, min))) {
+        $screen-min : map-get($screenWidth, min);
+    } @else {
+        $screen-min : 980;
+    }
+
+        
+    @if($type == screen) {
+
+       @media all and (min-width: #{$screen-min}px){
+
+            @content;
+
+       }  
+
+    } @else if($type == notScreen) {
+
+       @media all and (max-width: #{$tablet-max}px){
+
+            @content;
+
+       }  
+
+    } @else if($type == tablet){
+
+       @media all and (min-width: #{$tablet-min}px) and (max-width: #{$tablet-max}px){
+
+            @content;
+
+       }   
+
+    } @else if($type == retina){
+
+        @media (-webkit-min-device-pixel-ratio: 2), 
+                (-o-min-device-pixel-ratio: 3/2), 
+                (min--moz-device-pixel-ratio: 2), 
+                (min-device-pixel-ratio: 2), 
+                (min-resolution: 144dppx) {
+
+
+            @content;
+
+       }   
+
+    } @else if($type == mobile){
+
+        
+        @media all and (max-width: #{$mobile-max}px){
+
+            @content;
+
+       }     
+
+    } @else if($min != 200 && $max != 800){
+
+        @media all and (min-width: #{$min}px) and (max-width: #{$max}px){
+
+            @content;
+
+       }   
+
+    }
+
+}
+
+/* SPRITES
+   ========================================================================== */
+
+@mixin use-sprite($sprite-map, $sprites-map-retina, $sprite, $line-height: false, $size: true) {
+    
+    background-image: sprite-url($sprite-map);
+    background-position: sprite-position($sprite-map, $sprite);
+    background-repeat: no-repeat;
+    overflow: hidden;
+    display: block;
+    
+    // dont add element size
+    @if($size){
+         height: image-height(sprite-file($sprite-map, $sprite));
+         width: image-width(sprite-file($sprite-map, $sprite));
+    }
+ 
+
+    @if($line-height){
+        line-height: image-height(sprite-file($sprite-map, $sprite));
+    }
+
+
+
+     // for retina display
+     @include rwd(retina) {
+
+          background-image: sprite-url($sprites-map-retina);
+          background-size: ceil(image-width(sprite-path($sprites-map-retina)) / 2) ceil(image-height(sprite-path($sprites-map-retina)) / 2);
+          background-position: ceil(nth(sprite-position($sprites-map-retina, $sprite), 1) / 2) round(nth(sprite-position($sprites-map-retina, $sprite), 2) / 2);
+         
+          @if($size){
+            height: image-height(sprite-file($sprites-map-retina, $sprite)) / 2;
+            width: image-width(sprite-file($sprites-map-retina, $sprite)) / 2;
+          } 
+
+          @if($line-height){
+
+               line-height: image-height(sprite-file($sprites-map-retina, $sprite)) / 2;
+
+          }
+
+     }
+
+}
