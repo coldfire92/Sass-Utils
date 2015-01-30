@@ -2,18 +2,18 @@
    MIXINS
    ========================================================================== */
 
-@mixin main ($width: 980px) {
-	width: 100%;
-	max-width: $width;
-	margin: 0 auto;
-	position: relative;
-	height: 100%;
+@mixin main($width: 980px) {
+  width: 100%;
+  max-width: $width;
+  margin: 0 auto;
+  position: relative;
+  height: 100%;
 }
 
 @mixin before {
-	display: block;
-	content: '';
-	position: absolute;
+  display: block;
+  content: '';
+  position: absolute;
 }
 
 @mixin clear-fix() {
@@ -36,17 +36,17 @@
 
 @mixin selection($color, $bg-color) { 
 
-	@include user-select(text);
+  @include user-select(text);
 
-	&::-moz-selection {
+  &::-moz-selection {
     background: $bg-color;
     color: $color;
-	}	
+  } 
 
-	&::selection {
+  &::selection {
       background: $bg-color;
       color: $color; 
-	}
+  }
 
 }
 
@@ -65,30 +65,35 @@
    ========================================================================== */
 
 @mixin rwd($type: "screen", $min: 200, $max: 800) {
-
-    @if (variable-exists(map-get($mobileWidth, max))) {
-        $mobile-max : map-get($mobileWidth, max);
-    } @else {
-        $mobile-max : 499;
+  
+    @if variable-exists(mobile-witdth){
+       
+        $mobile-witdth : (
+            max : 500
+        );
     }
 
-    @if (variable-exists(map-get($tabletMax, min))) {
-        $tablet-min : map-get($tabletMax, min);
-    } @else {
-        $tablet-min : 500;
+    @if variable-exists(tablet-witdth){
+       
+        $tablet-witdth : (
+            min : 501,
+            max : 979
+        );
+
     }
 
-    @if (variable-exists(map-get($tabletMax, max))) {
-        $tablet-max : map-get($tabletMax, max);
-    } @else {
-        $tablet-max : 979;
-    }
+    @if variable-exists(screen-witdth){
+       
+        $screen-witdth : (
+            max : 980
+        );
 
-    @if (variable-exists(map-get($screenWidth, min))) {
-        $screen-min : map-get($screenWidth, min);
-    } @else {
-        $screen-min : 980;
     }
+    
+    $mobile-max : map-get($mobile-width, max);
+    $tablet-min : map-get($tablet-width, min);
+    $tablet-max : map-get($tablet-width, max);
+    $screen-min : map-get($screen-width, min);
 
         
     @if($type == screen) {
