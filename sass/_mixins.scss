@@ -64,7 +64,7 @@
 /* RETINA
    ========================================================================== */
 
-@mixin rwd($type: "screen", $min: 200, $max: 800) {
+@mixin rwd($type: "none", $min: 200, $max: 800) {
   
     @if variable-exists(mobile-witdth){
        
