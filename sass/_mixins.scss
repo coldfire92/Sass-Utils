@@ -64,7 +64,7 @@
 /* RETINA
    ========================================================================== */
 
-@mixin rwd($type: "none", $min: 200, $max: 800) {
+@mixin rwd($type: none, $min: 0, $max: 0) {
   
     @if variable-exists(mobile-witdth){
        
@@ -142,15 +142,15 @@
 
        }     
 
-    } @else if($min != 200 && $max != 800){
-
+    } @else if( $max != 0 and $min != 0 ){
+              
         @media all and (min-width: #{$min}px) and (max-width: #{$max}px){
 
             @content;
-
-        }    
-
-    } @else if($min != 200 && $max == 800){
+           
+       }
+            
+    } @else if($min != 0){
 
         @media all and (min-width: #{$min}px){
 
@@ -158,7 +158,7 @@
 
         } 
 
-    } @else if($min == 200 && $max != 800){
+    } @else if($max != 0){
         
         @media all and (max-width: #{$max}px){
 
@@ -167,7 +167,6 @@
         } 
 
     }
-
 
 }
 
