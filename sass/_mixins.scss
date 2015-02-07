@@ -148,9 +148,26 @@
 
             @content;
 
-       }   
+        }    
+
+    } @else if($min != 200 && $max == 800){
+
+        @media all and (min-width: #{$min}px){
+
+            @content;
+
+        } 
+
+    } @else if($min == 200 && $max != 800){
+        
+        @media all and (max-width: #{$max}px){
+
+            @content;
+
+        } 
 
     }
+
 
 }
 
