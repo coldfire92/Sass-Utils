@@ -1,0 +1,40 @@
+
+@import 'utils';
+
+div {
+	display: none;
+}
+
+
+.screen {
+
+	@include rwd(screen) {
+		background: green;
+		display: block;
+	}
+
+	@include rwd($min: 1024 ) {
+		background: green;
+		display: block;
+	}
+
+}
+
+.tablet {
+
+	@include rwd($min: 524, $max: 1023 ) {
+		background: blue;
+		display: block;
+	}
+
+}
+
+
+.mobile {
+
+	@include rwd($max: 523 ) {
+		background: yellow;
+		display: block;
+	}
+
+}

@@ -10,7 +10,23 @@
   height: 100%;
 }
 
-@mixin before {
+
+@mixin hide-text() {
+    display: block;
+    overflow: hidden;
+    text-indent: -9000px;
+}
+
+@mixin center() {
+
+    @include translate(-50%, -50%);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+
+}
+
+@mixin before() {
   display: block;
   content: '';
   position: absolute;
@@ -30,6 +46,8 @@
   // For IE 6/7 (trigger hasLayout)
   zoom: 1;
 }
+
+
 
 /* SELECTIONS
    ========================================================================== */
@@ -66,37 +84,13 @@
 
 @mixin rwd($type: none, $min: 0, $max: 0) {
   
-    @if variable-exists(mobile-witdth){
-       
-        $mobile-witdth : (
-            max : 500
-        );
-    }
 
-    @if variable-exists(tablet-witdth){
-       
-        $tablet-witdth : (
-            min : 501,
-            max : 979
-        );
-
-    }
-
-    @if variable-exists(screen-witdth){
-       
-        $screen-witdth : (
-            max : 980
-        );
-
-    }
+    /* Screen 
+       ========================================================================== */
     
-    $mobile-max : map-get($mobile-width, max);
-    $tablet-min : map-get($tablet-width, min);
-    $tablet-max : map-get($tablet-width, max);
-    $screen-min : map-get($screen-width, min);
+    @if($type == screen and variable-exists(screen-width)) {
 
-        
-    @if($type == screen) {
+       $screen-min : map-get($screen-width, min);
 
        @media all and (min-width: #{$screen-min}px){
 
@@ -104,15 +98,25 @@
 
        }  
 
-    } @else if($type == notScreen) {
+    } @else if($type == notScreen and variable-exists(tablet-width)) {
 
-       @media all and (max-width: #{$tablet-max}px){
+        $tablet-max : map-get($tablet-width, max); 
+
+        @media all and (max-width: #{$tablet-max}px){
 
             @content;
 
-       }  
+       }
 
-    } @else if($type == tablet){
+
+     /* Tablet
+        ========================================================================== */
+
+             
+    } @else if($type == tablet and variable-exists(tablet-width)){
+
+       $tablet-max : map-get($tablet-width, max); 
+      $tablet-min : map-get($tablet-width, min);
 
        @media all and (min-width: #{$tablet-min}px) and (max-width: #{$tablet-max}px){
 
@@ -120,6 +124,9 @@
 
        }   
 
+    /* Retina
+       ========================================================================== */
+    
     } @else if($type == retina){
 
         @media (-webkit-min-device-pixel-ratio: 2), 
@@ -128,14 +135,19 @@
                 (min-device-pixel-ratio: 2), 
                 (min-resolution: 144dppx) {
 
-
             @content;
 
-       }   
+       }
 
-    } @else if($type == mobile){
 
-        
+      /* Mobile
+        ========================================================================== */
+            
+    } @else if($type == mobile and variable-exists(mobile-width)){
+
+
+        $mobile-max : map-get($mobile-width, max);
+    
         @media all and (max-width: #{$mobile-max}px){
 
             @content;
