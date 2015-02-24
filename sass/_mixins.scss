@@ -185,11 +185,12 @@
 /* SPRITES
    ========================================================================== */
 
-@mixin use-sprite($sprite-map, $sprites-map-retina, $sprite, $line-height: false, $size: true) {
+@mixin use-sprite($sprite-map, $sprite, $sprites-map-retina: false, $line-height: false, $size: true) {
     
     background-image: sprite-url($sprite-map);
     background-position: sprite-position($sprite-map, $sprite);
     background-repeat: no-repeat;
+    background-color: transparent;
     overflow: hidden;
     display: block;
     
@@ -204,10 +205,10 @@
         line-height: image-height(sprite-file($sprite-map, $sprite));
     }
 
-
-
+    @if($sprites-map-retina){
+  
      // for retina display
-     @include rwd(retina) {
+    @include rwd(retina) {
 
           background-image: sprite-url($sprites-map-retina);
           background-size: ceil(image-width(sprite-path($sprites-map-retina)) / 2) ceil(image-height(sprite-path($sprites-map-retina)) / 2);
@@ -225,5 +226,7 @@
           }
 
      }
+
+   } 
 
 }
