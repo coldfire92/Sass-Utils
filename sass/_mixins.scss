@@ -1,5 +1,5 @@
 /* ==========================================================================
-   MIXINS
+   Mixins
    ========================================================================== */
 
 @mixin main($width: 980px) {
@@ -10,6 +10,24 @@
   height: 100%;
 }
 
+/* Show / hide
+   ========================================================================== */
+
+@mixin show() {
+    opacity: 1;
+    visibility: visible;
+}
+
+@mixin hide() {
+    opacity: 0;
+    visibility: hidden;
+}
+
+@mixin animate-hide($time: 500ms) {
+    
+    @include transition(opacity #{$time}, visibility #{500ms});
+
+}
 
 @mixin hide-text() {
     display: block;
@@ -49,7 +67,7 @@
 
 
 
-/* SELECTIONS
+/* Selections
    ========================================================================== */
 
 @mixin selection($color, $bg-color) { 
@@ -79,7 +97,7 @@
 
 }
 
-/* RETINA
+/* Retina
    ========================================================================== */
 
 @mixin rwd($type: none, $min: 0, $max: 0) {
@@ -154,7 +172,17 @@
 
        }     
 
-    } @else if( $max != 0 and $min != 0 ){
+    } @else if($type == notMobile and variable-exists(mobile-width)) {
+
+        $mobile-max : map-get($mobile-width, max); 
+
+        @media all and (min-width: #{$mobile-max}px){
+
+            @content;
+
+       }
+
+     }  @else if( $max != 0 and $min != 0 ){
               
         @media all and (min-width: #{$min}px) and (max-width: #{$max}px){
 
@@ -182,7 +210,7 @@
 
 }
 
-/* SPRITES
+/* Sprites
    ========================================================================== */
 
 @mixin use-sprite($sprite-map, $sprite, $sprites-map-retina: false, $line-height: false, $size: true) {
