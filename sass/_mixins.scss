@@ -157,9 +157,9 @@
 
     } @else if($type == notScreen and variable-exists(tablet-width)) {
 
-        $tablet-max : map-get($tablet-width, max); 
+        $screen-min : map-get($screen-width, min); 
 
-        @media all and (max-width: #{$tablet-max}px){
+        @media all and (max-width: #{$screen-min}px){
 
             @content;
 
@@ -213,9 +213,9 @@
 
     } @else if($type == notMobile and variable-exists(mobile-width)) {
 
-        $mobile-max : map-get($mobile-width, max); 
+        $tablet-min : map-get($tablet-width, min); 
 
-        @media all and (min-width: #{$mobile-max}px){
+        @media all and (min-width: #{$tablet-min}px){
 
             @content;
 
