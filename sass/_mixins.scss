@@ -133,7 +133,7 @@
 
 }
 
-@mixin rwd-by-classes($type){
+@mixin rwd-by-class($type){
     @if($type == screen) {
         body.screen {
             @content;
