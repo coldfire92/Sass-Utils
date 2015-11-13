@@ -133,6 +133,20 @@
 
 }
 
+@mixin rwd-by-classes($type){
+    @if($type == screen) {
+        body.screen {
+            @content;
+        }
+    } 
+    
+    @if($type == mobile) {
+        body.mobile {
+            @content;
+        }
+    } 
+}
+
 /* Retina
    ========================================================================== */
 
