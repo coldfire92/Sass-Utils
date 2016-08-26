@@ -86,7 +86,7 @@
    ========================================================================== */
 
 @mixin selection($color, $bg-color) {
-  @include user-select(text);
+  user-select : text;
 
   &::-moz-selection {
     background: $bg-color;
